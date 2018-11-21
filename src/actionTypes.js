@@ -1,0 +1,9 @@
+export const SET_USER = 'SET_USER';
+export const REMOVE_USER = 'REMOVE_USER';
+export const LOAD_SURVEYS = 'LOAD_SURVEYS';
+export const ADD_SURVEY = 'ADD_SURVEY';
+export const REMOVE_SURVEY = 'REMOVE_SURVEY';
+export const UPDATE_SURVEY = 'UPDATE_SURVEY';
+export const LOAD_QUESTIONS = 'LOAD_QUESTIONS';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const REMOVE_QUESTION = 'REMOVE_QUESTION';
