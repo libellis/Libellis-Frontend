@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUserFromToken, logout } from './actions';
+import { getUserFromToken, getSurveysFromAPI, logout } from './actions';
 
 class Auth extends Component {
 
@@ -32,4 +32,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getUserFromToken, logout })(Auth);
+export default connect(mapStateToProps, { getUserFromToken, getSurveysFromAPI, logout })(Auth);

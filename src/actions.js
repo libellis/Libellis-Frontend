@@ -53,17 +53,19 @@ function removeUser() {
   return { type: REMOVE_USER }
 }
 
-export function getSurveysFromAPI() {
+export function getSurveysFromAPI(search) {
   return function (dispatch) {
-    axios.get(`${BASE_URL}/surveys`)
-      .then(r => dispatch(gotSurveys(r.data)));
+    axios.get(`${BASE_URL}/surveys`, { params: { search } })
+      .then(r => dispatch(gotSurveys(r.data.surveys)));
   };
 }
 
 export function addSurveyToAPI(survey) {
   return function (dispatch) {
-    axios.survey(`${BASE_URL}/surveys`, survey)
-      .then(r => dispatch(addSurvey(r.data)))
+    const _token = localStorage.getItem('token');
+    const data = { ...survey, _token };
+    axios.post(`${BASE_URL}/surveys`, data)
+      .then(r => dispatch(addSurvey(r.data.survey)))
   }
 }
 
@@ -98,7 +100,7 @@ export function getQuestionFromAPI(survey_id) {
 function gotSurveys(surveys) {
   const newsurveys = {};
   for (const survey of surveys) {
-    newsurveys[survey.id] = survey;
+    newsurveys[survey._id] = survey;
   }
   return { type: LOAD_SURVEYS, surveys: newsurveys }
 }

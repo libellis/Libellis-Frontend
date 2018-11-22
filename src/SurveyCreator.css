@@ -1,0 +1,47 @@
+.SurveyCreator label {
+  padding-top: 5px;
+}
+.SurveyForm {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ButtonGroup {
+  display: block;
+}
+
+.Button {
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
+.form-control {
+  background-color: #313339 !important;
+  border: 1px solid black !important;
+  color: #aaaaaa !important;
+}
+
+.form-control:active {
+  border: 2px solid #7289da !important;
+}
+
+.form-control:focus {
+  border: 2px solid #7289da !important;
+}
+
+input:active {
+  border: 2px solid #7289da;
+}
+
+input:focus {
+  border: 2px solid #7289da;
+}
+
+.btn-primary {
+  background-image: none !important;
+  background-color: #7289da !important; 
+}
+
+.btn-primary:hover {
+  background-image: none !important;
+  background-color: #5B72C3 !important; 
+}

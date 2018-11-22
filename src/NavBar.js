@@ -22,7 +22,10 @@ class NavBar extends Component {
           {this.props.currentUser ?
             <React.Fragment>
               <NavItem>
-                <NavLink className="nav-link" to='/'>My Feed</NavLink>
+                <NavLink className="nav-link" to='/surveys'>Surveys</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="nav-link" to='/create'>Create</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink className="nav-link" to='/profile'>Profile</NavLink>

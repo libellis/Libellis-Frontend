@@ -1,5 +1,20 @@
 import { SET_USER, REMOVE_USER, LOAD_SURVEYS, ADD_SURVEY, REMOVE_SURVEY, UPDATE_SURVEY, LOAD_QUESTIONS, ADD_QUESTION, REMOVE_QUESTION } from './actionTypes';
 
+const testState = {
+  surveys: {
+    "3": {
+      _id: 3,
+      author: 'testuser',
+      title: 'xxSuperCoolTestSurveyxx',
+      description: '9999ThisIsDescriptive9999',
+      date_posted: '2018-06-13',
+      anonymous: true,
+    },
+  },
+  questions: {},
+  currentUser: null,
+}
+
 function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, action) {
   console.log("reducer ran; state & action:", state, action);
 
@@ -13,9 +28,12 @@ function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, 
     case LOAD_SURVEYS:
       return { ...state, surveys: { ...action.surveys } }
 
+    // must use _id as that's what we get back from API
     case ADD_SURVEY:
       let survey = { ...action.survey }
-      return { ...state, surveys: { ...state.surveys, [survey.id.toString()]: survey } };
+      console.log('survey:', survey);
+      console.log('survey id:', survey._id);
+      return { ...state, surveys: { ...state.surveys, [survey._id]: survey } };
 
     case REMOVE_SURVEY:
       const surveys = { ...state.surveys };

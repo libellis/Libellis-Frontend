@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 import NavBar from './NavBar';
 import Wall from './Wall';
 import Auth from './Auth';
+import SurveyDetails from './SurveyDetails';
 import SurveyCreator from './SurveyCreator';
 import LoginSignupForm from './LoginSignupForm';
 import { connect } from 'react-redux';
@@ -19,8 +20,12 @@ class App extends Component {
         <Container className="App">
           <Switch>
             <Route
-              exact path="/"
-              render={() => <Wall />}
+              exact path="/surveys/:survey_id"
+              render={(props) => <SurveyDetails {...props} />}
+            />
+            <Route
+              path="/surveys"
+              render={(props) => <Wall {...props} />}
             />
             <Route
               exact path="/create"
