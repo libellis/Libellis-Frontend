@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, ButtonGroup, Alert } from 'reactstrap';
 import { Jumbotron } from 'reactstrap';
+import { addQuestionToAPI } from './actions';
 import SurveyCard from './SurveyCard';
+import QuestionCreator from './QuestionCreator';
 import './SurveyDetails.css'
 
 class Survey extends Component {
@@ -28,16 +30,7 @@ class Survey extends Component {
     }
   }
 
-  /** Control input fields */
-  handleChange = (evt) => {
-    this.setState({ [evt.target.name]: evt.target.value })
-  }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault();
-    const { title, description } = this.state;
-    this.props.addSurveyToAPI({ title, description });
-  }
   // Displays a list of surveys for this survey and
   // details up top
   render() {
@@ -49,23 +42,7 @@ class Survey extends Component {
           <h1>Survey Title:{this.props.survey.title}</h1>
           <p>Survey Description:{this.props.survey.description}</p>
         </Jumbotron>
-        <section className="SurveyCreator">
-          <Form onSubmit={this.handleSubmit} className="SurveyForm p-5 mt-5 rounded">
-            <label className="mt-2" htmlFor="title">Question Title</label>
-            <Input id="title" name="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-              type='text' />
-
-            <label className="mt-2" htmlFor="type">Type</label>
-            <Input id="type" name="type"
-              value={this.state.type}
-              type='type'
-              onChange={this.handleChange} />
-            <br />
-            <Button color="primary">Submit</Button>
-          </Form>
-        </section>
+        <QuestionCreator addQuestion={this.props.addQuestionToAPI} survey_id={this.props.match.params.survey_id} />
       </React.Fragment>
     )
   }
@@ -78,4 +55,4 @@ function mapStateToProps(state, props) {
   }
 }
 
-export default connect(mapStateToProps)(Survey);
+export default connect(mapStateToProps, { addQuestionToAPI })(Survey);

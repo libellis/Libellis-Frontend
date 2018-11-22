@@ -62,15 +62,14 @@ function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, 
 
     case ADD_QUESTION:
       let question = { ...action.question };
-      console.log({ ...state, questions: { ...state.questions } });
-      console.log(question.id);
+      console.log('question object: ', question);
       return ({
         ...state,
         questions: {
           ...state.questions,
-          [action.post_id]: {
-            ...state.questions[action.post_id],
-            [question.id]: question
+          [question._survey_id]: {
+            ...state.questions[question._survey_id],
+            [question._id]: question
           }
         }
       });

@@ -135,18 +135,19 @@ function updateSurvey(survey) {
 }
 
 
-export function addQuestionToAPI(question, post_id) {
+export function addQuestionToAPI(question, survey_id) {
+  const _token = localStorage.getItem('token');
+  const data = { ...question, _token }
   return function (dispatch) {
-    axios.post(`${BASE_URL}/posts/${post_id}/question`, question)
-      .then(r => dispatch(addQuestion(r.data, post_id)))
+    axios.post(`${BASE_URL}/surveys/${survey_id}/questions`, data)
+      .then(r => dispatch(addQuestion(r.data.question)))
   }
 }
 
-function addQuestion(question, post_id) {
+function addQuestion(question) {
   return {
     type: ADD_QUESTION,
-    question,
-    post_id,
+    question
   };
 }
 
