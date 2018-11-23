@@ -15,8 +15,9 @@ const testState = {
   currentUser: null,
 }
 
-function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, action) {
+function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, currentUser: null }, action) {
   console.log("reducer ran; state & action:", state, action);
+  let survey;
 
   switch (action.type) {
     case SET_USER:
@@ -29,11 +30,12 @@ function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, 
       return { ...state, surveys: { ...action.surveys } }
 
     // must use _id as that's what we get back from API
+    // always overwrrite newSurvey with newest survey created
+    // just used for getting the id so we can forward user
+    // to page to add questions/choices to survey
     case ADD_SURVEY:
-      let survey = { ...action.survey }
-      console.log('survey:', survey);
-      console.log('survey id:', survey._id);
-      return { ...state, surveys: { ...state.surveys, [survey._id]: survey } };
+      survey = { ...action.survey }
+      return { ...state, newSurvey: survey, surveys: { ...state.surveys, [survey._id]: survey } };
 
     case REMOVE_SURVEY:
       const surveys = { ...state.surveys };
@@ -41,11 +43,12 @@ function rootReducer(state = { surveys: {}, questions: {}, currentUser: null }, 
       return { ...state, surveys };
 
     case UPDATE_SURVEY:
+      survey = { ...action.survey }
       return {
         ...state,
         surveys: {
           ...state.surveys,
-          [action.survey.id]: action.survey
+          [survey._id]: survey
         }
       };
 

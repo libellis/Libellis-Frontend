@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Form, Input, Button, ButtonGroup, Alert } from 'reactstrap';
-import { Jumbotron } from 'reactstrap';
-import './SurveyDetails.css'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Input, Button, ButtonGroup, Alert} from 'reactstrap';
+import './SurveyDetails.css';
 
 class ChoiceCreator extends Component {
   constructor(props) {
@@ -11,50 +10,86 @@ class ChoiceCreator extends Component {
       a: '',
       b: '',
       c: '',
-      d: ''
-    }
+      d: '',
+    };
   }
 
-  handleClick = (evt) => {
+  handleClick = evt => {
     evt.preventDefault();
-    this.props.passUpChoices(this.state);
+    this.props.passUpChoices({...this.state});
+    this.resetForm();
+  };
+
+  resetForm = () => {
+    this.setState({
+      a: '',
+      b: '',
+      c: '',
+      d: ''
+    })
   }
 
   /** Control input fields */
-  handleChange = (evt) => {
+  handleChange = evt => {
     this.setState({
-      [evt.target.name]: evt.target.value
-    })
-  }
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
+  /** Handle publishing Survey When
+   *  Done is clicked - still need
+   *  to pass up last question and choices
+   */
+  handleDone = evt => {
+    evt.preventDefault();
+    this.props.handleFinalize({...this.state});
+    this.resetForm();
+  };
 
   render() {
     return (
       <React.Fragment>
-        <Input id="a" name="a"
+        <Input
+          id="a"
+          name="a"
           value={this.state.a}
           onChange={this.handleChange}
-          type='text' />
+          type="text"
+        />
         <br />
-        <Input id="b" name="b"
+        <Input
+          id="b"
+          name="b"
           value={this.state.b}
           onChange={this.handleChange}
-          type='text' />
+          type="text"
+        />
         <br />
-        <Input id="c" name="c"
+        <Input
+          id="c"
+          name="c"
           value={this.state.c}
           onChange={this.handleChange}
-          type='text' />
+          type="text"
+        />
         <br />
-        <Input id="d" name="d"
+        <Input
+          id="d"
+          name="d"
           value={this.state.d}
           onChange={this.handleChange}
-          type='text' />
+          type="text"
+        />
         <br />
-        <Button color="primary" className="mr-2">Next</Button>
-        <Button onClick={this.handleClick} color="primary">Done</Button>
+        <Button onClick={this.handleClick} color="primary" className="mr-2">
+          Next
+        </Button>
+        <Button onClick={this.handleDone} color="primary">
+          Done
+        </Button>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default (ChoiceCreator);
+export default ChoiceCreator;
