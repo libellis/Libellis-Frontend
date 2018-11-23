@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import React, {Component} from 'react';
+import {Switch, Route} from 'react-router-dom';
+import {Container} from 'reactstrap';
 import NavBar from './NavBar';
 import Wall from './Wall';
 import Auth from './Auth';
 import SurveyDetails from './SurveyDetails';
 import SurveyCreator from './SurveyCreator';
 import LoginSignupForm from './LoginSignupForm';
-import { connect } from 'react-redux';
-import { getUserFromToken } from './actions';
-
+import {connect} from 'react-redux';
+import {getUserFromToken} from './actions';
 
 class App extends Component {
-
   render() {
     return (
       <React.Fragment>
@@ -20,21 +18,17 @@ class App extends Component {
         <Container className="App">
           <Switch>
             <Route
-              exact path="/surveys/:survey_id"
-              render={(props) => <SurveyDetails {...props} />}
+              exact
+              path="/surveys/:survey_id"
+              render={props => <SurveyDetails {...props} />}
             />
+            <Route path="/surveys" render={props => <Wall {...props} />} />
             <Route
-              path="/surveys"
-              render={(props) => <Wall {...props} />}
+              exact
+              path="/create"
+              render={props => <SurveyCreator {...props} />}
             />
-            <Route
-              exact path="/create"
-              render={() => <SurveyCreator />}
-            />
-            <Route
-              exact path="/login"
-              render={() => <LoginSignupForm />}
-            />
+            <Route exact path="/login" render={() => <LoginSignupForm />} />
           </Switch>
         </Container>
       </React.Fragment>
