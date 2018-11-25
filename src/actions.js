@@ -7,6 +7,7 @@ import {
   UPDATE_SURVEY,
   LOAD_QUESTIONS,
   ADD_QUESTION,
+  SURVEY_TAKEN,
   REMOVE_QUESTION,
 } from './actionTypes';
 import jwt from 'jsonwebtoken';
@@ -109,28 +110,29 @@ export function publishSurveyInAPI(survey_id) {
   };
 }
 
-export function getQuestionFromAPI(survey_id) {
+//get a list of questions by survey_id
+export function getQuestionsFromAPI(survey_id) {
   return function(dispatch) {
-    axios.get(`${BASE_URL}/surveys/${survey_id}/question`).then(r => {
-      return dispatch(gotQuestion(r.data, survey_id));
+    axios.get(`${BASE_URL}/surveys/${survey_id}/questions/`).then(r => {
+      return dispatch(gotQuestions(r.data.questions, survey_id));
     });
   };
 }
 
 function gotSurveys(surveys) {
-  const newsurveys = {};
+  const newSurveys = {};
   for (const survey of surveys) {
-    newsurveys[survey._id] = survey;
+    newSurveys[survey._id] = survey;
   }
-  return {type: LOAD_SURVEYS, surveys: newsurveys};
+  return {type: LOAD_SURVEYS, surveys: newSurveys};
 }
 
-function gotQuestion(question, survey_id) {
-  const newQuestion = {};
-  for (const question of question) {
-    newQuestion[question.id] = question;
+function gotQuestions(questions, survey_id) {
+  const newQuestions = {};
+  for (const question of questions) {
+    newQuestions[question._id] = question;
   }
-  return {type: LOAD_QUESTIONS, question: newQuestion, survey_id};
+  return {type: LOAD_QUESTIONS, questions: newQuestions, survey_id};
 }
 
 function addSurvey(survey) {
@@ -171,22 +173,54 @@ function addQuestion(question) {
   };
 }
 
-export function removeQuestionFromAPI(question_id, post_id) {
+export function removeQuestionFromAPI(question_id, survey_id) {
   return function(dispatch) {
     axios
-      .delete(`${BASE_URL}/posts/${post_id}/question/${question_id}`)
+      .delete(`${BASE_URL}/surveys/${survey_id}/question/${question_id}`)
       .then(r => {
         if (r.data.message === 'deleted') {
-          return dispatch(removeQuestion(question_id, post_id));
+          return dispatch(removeQuestion(question_id, survey_id));
         }
       });
   };
 }
 
-function removeQuestion(id, post_id) {
+function removeQuestion(id, survey_id) {
   return {
     type: REMOVE_QUESTION,
     id,
-    post_id,
+    survey_id,
   };
+}
+
+export function submitVotesToAPI(votesArray, survey_id) {
+  const _token = localStorage.getItem('token');
+  const votes = [];
+  // restructure data to what server wants
+  for (const question of votesArray) {
+    const vote = {};
+    vote.question_id = question.id;
+    vote.vote_data = [];
+    const choice = {
+      choice_id: question.choice,
+      score: 1,
+    };
+    vote.vote_data.push(choice);
+    votes.push(vote);
+  }
+
+  console.log(`Here's what we will send out:`, votes);
+
+  return function(dispatch) {
+    axios
+      .post(`${BASE_URL}/surveys/${survey_id}/votes`, {_token, votes})
+      .then(r => dispatch(surveyTaken(r.data)));
+  };
+}
+
+function surveyTaken(data) {
+  return {
+    type: SURVEY_TAKEN,
+    data,
+  }
 }

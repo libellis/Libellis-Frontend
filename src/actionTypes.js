@@ -7,3 +7,4 @@ export const UPDATE_SURVEY = 'UPDATE_SURVEY';
 export const LOAD_QUESTIONS = 'LOAD_QUESTIONS';
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const REMOVE_QUESTION = 'REMOVE_QUESTION';
+export const SURVEY_TAKEN = 'SURVEY_TAKEN';
