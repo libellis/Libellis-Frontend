@@ -4,6 +4,7 @@ import {Form, Input, Button, ButtonGroup, Alert} from 'reactstrap';
 import {Jumbotron} from 'reactstrap';
 import SurveyCard from './SurveyCard';
 import Choices from './Choices';
+import TakeSurveyForm from './TakeSurveyForm';
 import './SurveyDetails.css';
 
 class QuestionCreator extends Component {
@@ -59,7 +60,6 @@ class QuestionCreator extends Component {
   };
 
   render() {
-    if (!this.props.published) {
       return (
         <Form
           className="QuestionCreator"
@@ -94,9 +94,6 @@ class QuestionCreator extends Component {
           />
         </Form>
       );
-    } else {
-      return <h3>Form Is Published</h3>
-    }
   }
 }
 

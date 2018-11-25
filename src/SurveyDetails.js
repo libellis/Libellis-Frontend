@@ -2,9 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, Input, Button, ButtonGroup, Alert} from 'reactstrap';
 import {Jumbotron} from 'reactstrap';
-import {addQuestionToAPI, publishSurveyInAPI} from './actions';
+import {
+  addQuestionToAPI,
+  publishSurveyInAPI,
+  getQuestionsFromAPI,
+} from './actions';
 import SurveyCard from './SurveyCard';
 import QuestionCreator from './QuestionCreator';
+import TakeSurveyForm from './TakeSurveyForm';
 import './SurveyDetails.css';
 
 class Survey extends Component {
@@ -26,6 +31,8 @@ class Survey extends Component {
         error: true,
       });
     } else {
+      // survey exists, lets load up it's questions and choices
+      this.props.getQuestionsFromAPI(this.props.survey._id);
       this.setState({loading: false});
     }
   }
@@ -41,12 +48,21 @@ class Survey extends Component {
           <h1>Survey Title:{this.props.survey.title}</h1>
           <p>Survey Description:{this.props.survey.description}</p>
         </Jumbotron>
-        <QuestionCreator
-          addQuestion={this.props.addQuestionToAPI}
-          survey_id={this.props.match.params.survey_id}
-          publishSurvey={this.props.publishSurveyInAPI}
-          published={this.props.survey.published}
-        />
+        {this.props.survey.published ? (
+          this.props.questions ? (
+            <TakeSurveyForm
+              survey={this.props.survey}
+              questions={this.props.questions}
+            />
+          ) : null
+        ) : (
+          <QuestionCreator
+            addQuestion={this.props.addQuestionToAPI}
+            survey={this.props.survey}
+            survey_id={this.props.match.params.survey_id}
+            publishSurvey={this.props.publishSurveyInAPI}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -56,10 +72,11 @@ function mapStateToProps(state, props) {
   const id = props.match.params.survey_id;
   return {
     survey: state.surveys[id],
+    questions: state.questions[id],
   };
 }
 
 export default connect(
   mapStateToProps,
-  {addQuestionToAPI, publishSurveyInAPI},
+  {addQuestionToAPI, publishSurveyInAPI, getQuestionsFromAPI},
 )(Survey);

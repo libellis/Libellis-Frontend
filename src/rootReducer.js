@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, LOAD_SURVEYS, ADD_SURVEY, REMOVE_SURVEY, UPDATE_SURVEY, LOAD_QUESTIONS, ADD_QUESTION, REMOVE_QUESTION } from './actionTypes';
+import { SET_USER, REMOVE_USER, LOAD_SURVEYS, ADD_SURVEY, REMOVE_SURVEY, UPDATE_SURVEY, LOAD_QUESTIONS, ADD_QUESTION, REMOVE_QUESTION, SURVEY_TAKEN } from './actionTypes';
 
 const testState = {
   surveys: {
@@ -15,7 +15,7 @@ const testState = {
   currentUser: null,
 }
 
-function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, currentUser: null }, action) {
+function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, currentUser: null, taken: false }, action) {
   console.log("reducer ran; state & action:", state, action);
   let survey;
 
@@ -57,7 +57,7 @@ function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, curren
         ...state,
         questions: {
           ...state.questions,
-          [action.post_id]: {
+          [action.survey_id]: {
             ...action.questions
           }
         }
@@ -81,6 +81,10 @@ function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, curren
       const questions = { ...state.questions };
       delete questions[action.post_id][action.id];
       return { ...state, questions };
+
+    // TEST FOR NOW JUST TO UPDATE REDUX STATE TO SHOW VOTES WERE COUNTED
+    case SURVEY_TAKEN:
+      return {...state, taken: action.data}
 
     default:
       return state;
