@@ -39,7 +39,7 @@ function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, curren
 
     case REMOVE_SURVEY:
       const surveys = { ...state.surveys };
-      delete surveys[action.id.toString()];
+      delete surveys[action.id];
       return { ...state, surveys };
 
     case UPDATE_SURVEY:

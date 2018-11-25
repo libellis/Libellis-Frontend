@@ -11,6 +11,11 @@ class SurveyCard extends Component {
     }
   }
 
+  handleDelete = (evt) => {
+    evt.preventDefault();
+    this.props.deleteSurvey(this.props.survey._id);
+  }
+
   // Displays a card about a survey and a button to edit the survey
   render() {
     let { title, description, author } = this.props.survey;
@@ -28,6 +33,9 @@ class SurveyCard extends Component {
             to={this.props.editLink} >
             Edit Survey
           </Link>
+          <Button onClick={this.handleDelete}>
+            Delete Survey
+          </Button>
         </CardBody>
       </Card>
     );

@@ -79,13 +79,16 @@ export function addSurveyToAPI(survey) {
   };
 }
 
-export function removeSurveyFromAPI(id) {
+export function removeSurveyFromAPI(survey_id) {
   return function(dispatch) {
-    axios.delete(`${BASE_URL}/surveys/${id}`).then(r => {
-      if (r.data.message === 'deleted') {
-        return dispatch(removeSurvey(id));
-      }
-    });
+    const _token = localStorage.getItem('token');
+    axios
+      .delete(`${BASE_URL}/surveys/${survey_id}`, {data: {_token}})
+      .then(r => {
+        if (r.data === 'Deleted') {
+          return dispatch(removeSurvey(survey_id));
+        }
+      });
   };
 }
 

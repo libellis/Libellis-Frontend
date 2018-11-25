@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getSurveysFromAPI } from './actions';
+import { getSurveysFromAPI, removeSurveyFromAPI } from './actions';
 import SurveyCard from './SurveyCard';
 import Search from './Search';
 import './Wall.css'
@@ -41,6 +41,7 @@ class Wall extends Component {
           return (
             <SurveyCard
               key={survey._id}
+              deleteSurvey={this.props.removeSurveyFromAPI}
               survey={survey}
               editLink={`/surveys/${survey._id}`}
             />
@@ -58,4 +59,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getSurveysFromAPI })(Wall);
+export default connect(mapStateToProps, { getSurveysFromAPI, removeSurveyFromAPI })(Wall);
