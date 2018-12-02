@@ -2,6 +2,8 @@ import {
   SET_USER,
   REMOVE_USER,
   LOAD_SURVEYS,
+  LOAD_USER_HISTORY,
+  LOAD_USER_SURVEYS,
   ADD_SURVEY,
   REMOVE_SURVEY,
   UPDATE_SURVEY,
@@ -70,6 +72,24 @@ export function getSurveysFromAPI(search) {
   };
 }
 
+export function getUserHistoryFromAPI(username) {
+  return function(dispatch) {
+    const _token = localStorage.getItem('token');
+    axios
+      .get(`${BASE_URL}/users/${username}/history`, {params: {_token}})
+      .then(r => dispatch(gotUserHistory(r.data.surveys)));
+  };
+}
+
+export function getSurveysByUserFromAPI(username) {
+  return function(dispatch) {
+    const _token = localStorage.getItem('token');
+    axios
+      .get(`${BASE_URL}/users/${username}/surveys`, {params: {_token}})
+      .then(r => dispatch(gotUserSurveys(r.data.surveys)));
+  };
+}
+
 export function addSurveyToAPI(survey) {
   return function(dispatch) {
     const _token = localStorage.getItem('token');
@@ -125,6 +145,15 @@ function gotSurveys(surveys) {
     newSurveys[survey._id] = survey;
   }
   return {type: LOAD_SURVEYS, surveys: newSurveys};
+}
+
+function gotUserHistory(surveys) {
+  return {type: LOAD_USER_HISTORY, user_history: surveys};
+}
+
+function gotUserSurveys(surveys) {
+  console.log("gotUserSurveys", surveys)
+  return {type: LOAD_USER_SURVEYS, user_surveys: surveys};
 }
 
 function gotQuestions(questions, survey_id) {
