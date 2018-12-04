@@ -24,8 +24,8 @@ class UserProfile extends Component {
 
   /** get all surveys on mount */
   async componentDidMount() {
-    await this.props.getSurveysByUserFromAPI(this.props.currentUser);
-    await this.props.getUserHistoryFromAPI(this.props.currentUser);
+    this.props.getSurveysByUserFromAPI(this.props.currentUser);
+    this.props.getUserHistoryFromAPI(this.props.currentUser);
     this.setState({ loading: this.isLoading() });
   }
 
@@ -41,6 +41,7 @@ class UserProfile extends Component {
     return (
       <React.Fragment>
         <h1>Account</h1>
+        <h3>Username: {this.props.currentUser}</h3>
         <h3>Number of surveys created: {this.props.user_surveys.length}</h3>
         <h3>Number of surveys you have voted on: {this.props.user_history.length}</h3>
       </React.Fragment>
@@ -81,10 +82,10 @@ class UserProfile extends Component {
       {this.props.user_surveys.map(s => 
         !s.published ?
           <SurveyCard
-            key={s.survey_id}
+            key={s._id}
             deleteSurvey={this.props.removeSurveyFromAPI}
             survey={s}
-            editLink={`/surveys/${s.survey_id}`}
+            editLink={`/surveys/${s._id}`}
           />
           : ''
       )}
@@ -99,10 +100,10 @@ class UserProfile extends Component {
         {this.props.user_surveys.map(s => 
           s.published ?
             <SurveyCard
-              key={s.survey_id}
+              key={s._id}
               deleteSurvey={this.props.removeSurveyFromAPI}
               survey={s}
-              editLink={`/surveys/${s.survey_id}`}
+              editLink={`/surveys/${s._id}`}
             />
            : ''
         )}
