@@ -49,7 +49,6 @@ class Wall extends Component {
             />
           ) : null;
         })}
-        )}
       </div>
     );
   }
