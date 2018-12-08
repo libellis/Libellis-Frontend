@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, LOAD_SURVEYS, ADD_SURVEY, REMOVE_SURVEY, UPDATE_SURVEY, LOAD_QUESTIONS, ADD_QUESTION, REMOVE_QUESTION, SURVEY_TAKEN } from './actionTypes';
+import { SET_USER, REMOVE_USER, LOAD_SURVEYS, LOAD_USER_HISTORY, LOAD_USER_SURVEYS, ADD_SURVEY, REMOVE_SURVEY, UPDATE_SURVEY, LOAD_QUESTIONS, ADD_QUESTION, REMOVE_QUESTION, SURVEY_TAKEN } from './actionTypes';
 
 const testState = {
   surveys: {
@@ -28,6 +28,12 @@ function rootReducer(state = { surveys: {}, questions: {}, newSurvey: {}, curren
 
     case LOAD_SURVEYS:
       return { ...state, surveys: { ...action.surveys } }
+
+    case LOAD_USER_HISTORY:
+      return { ...state, user_history: action.user_history }
+    
+      case LOAD_USER_SURVEYS:
+      return { ...state, user_surveys: action.user_surveys }
 
     // must use _id as that's what we get back from API
     // always overwrrite newSurvey with newest survey created
