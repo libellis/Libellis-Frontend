@@ -2,85 +2,98 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Input, Button, ButtonGroup, Alert} from 'reactstrap';
 import './SurveyDetails.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ChoiceCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      a: '',
-      b: '',
-      c: '',
-      d: '',
+      choices: [
+        {
+          title: '',
+          type: 'text'
+        },
+        {
+          title: '',
+          type: 'text'
+        },
+      ],
     };
   }
 
   handleClick = evt => {
     evt.preventDefault();
-    this.props.passUpChoices({...this.state});
+    this.props.passUpChoices(this.state.choices);
     this.resetForm();
   };
 
   resetForm = () => {
     this.setState({
-      a: '',
-      b: '',
-      c: '',
-      d: ''
-    })
-  }
-
-  /** Control input fields */
-  handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value,
+      choices: [
+        {
+          title: '',
+          type: 'text',
+        },
+        {
+          title: '',
+          type: 'text',
+        },
+      ],
     });
   };
 
+  /** Control input fields */
+  handleChange = evt => {
+    // Make a copy of the choices array
+    const updatedChoices = [...this.state.choices];
+    // Make a copy of the choice object for the choice we are updating
+    const updatedChoice = {...this.state.choices[evt.target.dataset.id]};
+    // Update it's choice field with the radio button just selected
+    updatedChoice.title = evt.target.value;
+    // reassign at our copy of choices from state
+    updatedChoices[evt.target.dataset.id] = updatedChoice;
+    this.setState({
+      choices: updatedChoices,
+    });
+  };
+  
   /** Handle publishing Survey When
    *  Done is clicked - still need
    *  to pass up last question and choices
    */
   handleDone = evt => {
     evt.preventDefault();
-    this.props.handleFinalize({...this.state});
+    this.props.handleFinalize(this.state.choices);
     this.resetForm();
   };
+
+  addChoice = evt => {
+    evt.preventDefault();
+    const choices = [...this.state.choices];
+    choices.push({title: '', type: 'text'});
+    this.setState({choices});
+  }
 
   render() {
     return (
       <React.Fragment>
-        <Input
-          id="a"
-          name="a"
-          value={this.state.a}
-          onChange={this.handleChange}
-          type="text"
-        />
         <br />
-        <Input
-          id="b"
-          name="b"
-          value={this.state.b}
-          onChange={this.handleChange}
-          type="text"
-        />
-        <br />
-        <Input
-          id="c"
-          name="c"
-          value={this.state.c}
-          onChange={this.handleChange}
-          type="text"
-        />
-        <br />
-        <Input
-          id="d"
-          name="d"
-          value={this.state.d}
-          onChange={this.handleChange}
-          type="text"
-        />
-        <br />
+        <FontAwesomeIcon icon='plus-circle' onClick={this.addChoice} />
+        {this.state.choices.map((choice, idx) => {
+          return (
+            <React.Fragment>
+              <Input
+                key={idx}
+                data-id={idx}
+                name={idx}
+                value={this.state.choices[idx].title}
+                onChange={this.handleChange}
+                type="text"
+              />
+              <br />
+            </React.Fragment>
+          );
+        })}
         <Button onClick={this.handleClick} color="primary" className="mr-2">
           Next
         </Button>

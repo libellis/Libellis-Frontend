@@ -6,6 +6,7 @@ import {
   addQuestionToAPI,
   publishSurveyInAPI,
   getQuestionsFromAPI,
+  clearSurvey,
 } from './actions';
 import SurveyCard from './SurveyCard';
 import QuestionCreator from './QuestionCreator';
@@ -58,6 +59,7 @@ class Survey extends Component {
         ) : (
           <QuestionCreator
             addQuestion={this.props.addQuestionToAPI}
+            clearSurvey={this.props.clearSurvey}
             survey={this.props.survey}
             survey_id={this.props.match.params.survey_id}
             publishSurvey={this.props.publishSurveyInAPI}
@@ -78,5 +80,5 @@ function mapStateToProps(state, props) {
 
 export default connect(
   mapStateToProps,
-  {addQuestionToAPI, publishSurveyInAPI, getQuestionsFromAPI},
+  {addQuestionToAPI, publishSurveyInAPI, getQuestionsFromAPI, clearSurvey},
 )(Survey);

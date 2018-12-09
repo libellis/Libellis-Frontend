@@ -18,6 +18,10 @@ class QuestionCreator extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.clearSurvey();
+  }
+
   /** Control input fields */
   handleChange = evt => {
     this.setState({[evt.target.name]: evt.target.value});
@@ -31,16 +35,8 @@ class QuestionCreator extends Component {
   }
 
   attachChoices = choices => {
-    const choiceArray = [];
-    for (const key in choices) {
-      const choice = {
-        title: choices[key],
-        type: 'text',
-      };
-      choiceArray.push(choice);
-    }
     const {title, type} = this.state;
-    return {title, type, choices: choiceArray};
+    return {title, type, choices};
   };
 
   handleChoices = choices => {
