@@ -11,6 +11,7 @@ import {
   ADD_QUESTION,
   SURVEY_TAKEN,
   REMOVE_QUESTION,
+  CLEAR_SURVEY,
 } from './actionTypes';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
@@ -251,5 +252,13 @@ function surveyTaken(data) {
   return {
     type: SURVEY_TAKEN,
     data,
+  }
+}
+
+// clears temporary survey from state on question creator page so going back to
+// create page let's you create a new survey rather than redirect 
+export function clearSurvey() {
+  return {
+    type: CLEAR_SURVEY,
   }
 }

@@ -18,6 +18,10 @@ class QuestionCreator extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.clearSurvey();
+  }
+
   /** Control input fields */
   handleChange = evt => {
     this.setState({[evt.target.name]: evt.target.value});
