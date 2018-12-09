@@ -31,16 +31,8 @@ class QuestionCreator extends Component {
   }
 
   attachChoices = choices => {
-    const choiceArray = [];
-    for (const key in choices) {
-      const choice = {
-        title: choices[key],
-        type: 'text',
-      };
-      choiceArray.push(choice);
-    }
     const {title, type} = this.state;
-    return {title, type, choices: choiceArray};
+    return {title, type, choices};
   };
 
   handleChoices = choices => {

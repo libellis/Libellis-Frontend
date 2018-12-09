@@ -74,7 +74,6 @@ class TakeSurveyForm extends Component {
                         type="radio"
                         key={choice._id}
                         id={choice._id}
-                        value={choice._id}
                         data-id={idx}
                         onChange={this.handleChange}
                         value={choice._id}
