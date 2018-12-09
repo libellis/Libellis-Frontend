@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Input, Button, ButtonGroup, Alert} from 'reactstrap';
 import './SurveyDetails.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 class ChoiceCreator extends Component {
   constructor(props) {
@@ -11,11 +11,11 @@ class ChoiceCreator extends Component {
       choices: [
         {
           title: '',
-          type: 'text'
+          type: 'text',
         },
         {
           title: '',
-          type: 'text'
+          type: 'text',
         },
       ],
     };
@@ -56,7 +56,7 @@ class ChoiceCreator extends Component {
       choices: updatedChoices,
     });
   };
-  
+
   /** Handle publishing Survey When
    *  Done is clicked - still need
    *  to pass up last question and choices
@@ -72,13 +72,22 @@ class ChoiceCreator extends Component {
     const choices = [...this.state.choices];
     choices.push({title: '', type: 'text'});
     this.setState({choices});
-  }
+  };
+
+  removeChoice = evt => {
+    evt.preventDefault();
+    const choices = this.state.choices.slice(0, -1);
+    this.setState({choices});
+  };
 
   render() {
     return (
       <React.Fragment>
         <br />
-        <FontAwesomeIcon icon='plus-circle' onClick={this.addChoice} />
+        <FontAwesomeIcon icon="plus-circle" onClick={this.addChoice} />
+        {this.state.choices.length > 2 ? (
+          <FontAwesomeIcon icon="minus-circle" onClick={this.removeChoice} />
+        ) : null}
         {this.state.choices.map((choice, idx) => {
           return (
             <React.Fragment>
