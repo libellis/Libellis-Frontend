@@ -74,11 +74,18 @@ class ChoiceCreator extends Component {
     this.setState({choices});
   }
 
+  removeChoice = evt => {
+    evt.preventDefault();
+    const choices = this.state.choices.slice(0,-1);
+    this.setState({choices});
+  }
+
   render() {
     return (
       <React.Fragment>
         <br />
         <FontAwesomeIcon icon='plus-circle' onClick={this.addChoice} />
+        <FontAwesomeIcon icon='minus-circle' onClick={this.removeChoice} />
         {this.state.choices.map((choice, idx) => {
           return (
             <React.Fragment>
