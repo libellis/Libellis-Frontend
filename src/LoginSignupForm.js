@@ -21,6 +21,14 @@ class Login extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.errors !== this.props.errors) {
+      this.setState({
+        errors: this.props.errors,
+      })
+    }
+  }
+
   // Handles login and signup button and flips state
   // Also removes all errors
   handleClick = (show) => {
@@ -104,6 +112,9 @@ class Login extends Component {
   * to toggle the login and sign up forms 
   */
   render() {
+    console.log('errors', this.state.errors)
+    console.log('props errors', this.props)
+
     if (this.props.currentUser) return <Redirect to='/' />
     return (
       <div className="Login mt-5">
@@ -142,8 +153,10 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('mapstatetoprops', state)
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    errors: state.errors,
   }
 }
 

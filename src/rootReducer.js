@@ -1,5 +1,6 @@
 import {
   SET_USER,
+  SET_LOGIN_ERROR,
   REMOVE_USER,
   LOAD_SURVEYS,
   LOAD_USER_HISTORY,
@@ -36,6 +37,7 @@ function rootReducer(
     newSurvey: {},
     currentUser: null,
     taken: false,
+    errors: [],
   },
   action,
 ) {
@@ -44,7 +46,10 @@ function rootReducer(
 
   switch (action.type) {
     case SET_USER:
-      return {...state, currentUser: action.username};
+      return {...state, currentUser: action.username, errors: []};
+
+    case SET_LOGIN_ERROR:
+      return {...state, errors: action.errors};
 
     case REMOVE_USER:
       return {...state, currentUser: null};
