@@ -54,6 +54,7 @@ class TakeSurveyForm extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     this.props.submitVotesToAPI(this.state.questions, this.props.survey._id);
+    this.props.history.push('/surveys');
   };
 
   render() {
