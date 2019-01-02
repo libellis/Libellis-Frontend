@@ -54,6 +54,7 @@ class Survey extends Component {
             <TakeSurveyForm
               survey={this.props.survey}
               questions={this.props.questions}
+              history={this.props.history}
             />
           ) : null
         ) : (
