@@ -189,6 +189,7 @@ function updateSurvey(survey) {
 export function addQuestionToAPI(question, survey_id) {
   const _token = localStorage.getItem('token');
   const data = {...question, _token};
+  console.log("Here's your question:", question);
   return function(dispatch) {
     axios
       .post(`${BASE_URL}/surveys/${survey_id}/questions`, data)
@@ -230,16 +231,9 @@ export function submitVotesToAPI(votesArray, survey_id) {
   for (const question of votesArray) {
     const vote = {};
     vote.question_id = question.id;
-    vote.vote_data = [];
-    const choice = {
-      choice_id: question.choice,
-      score: 1,
-    };
-    vote.vote_data.push(choice);
+    vote.vote_data = [...question.votes];
     votes.push(vote);
   }
-
-  console.log(`Here's what we will send out:`, votes);
 
   return function(dispatch) {
     axios

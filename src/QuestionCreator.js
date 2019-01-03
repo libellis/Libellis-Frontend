@@ -14,7 +14,7 @@ class QuestionCreator extends Component {
       loading: true,
       error: false,
       title: '',
-      type: '',
+      type: 'multiple',
     };
   }
 
@@ -71,7 +71,6 @@ class QuestionCreator extends Component {
             onChange={this.handleChange}
             type="text"
           />
-
           <label className="mt-2" htmlFor="type">
             Type
           </label>
@@ -79,9 +78,11 @@ class QuestionCreator extends Component {
             id="type"
             name="type"
             value={this.state.type}
-            type="type"
-            onChange={this.handleChange}
-          />
+            type="select"
+            onChange={this.handleChange}>
+            <option value="multiple">Multiple Choice</option>
+            <option value="ranked">Ranked Poll</option>
+          </Input>
           <br />
           <label className="mt-2">Choices:</label>
           <Choices
