@@ -25,6 +25,9 @@ export function register(regData) {
       let token = r.data.token;
       localStorage.setItem('token', token);
       return dispatch(setCurrentUser(r.data.token));
+    }).catch(err => {
+      console.log('Register error', err.response.data);
+      return dispatch(setLoginErrors(err.response.data.error));
     });
   };
 }

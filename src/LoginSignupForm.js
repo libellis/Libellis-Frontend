@@ -53,6 +53,7 @@ class Login extends Component {
     }
 
     //put some thunks here
+    console.log('Registering user', username)
     if (this.state.showSignup) {
       this.props.register({ username, password, first_name, last_name, email });
     } else {
@@ -60,7 +61,7 @@ class Login extends Component {
     }
 
     //reset input fields
-    this.resetInputs();
+    // this.resetInputs();
   }
 
   /** Control input fields */
@@ -69,14 +70,16 @@ class Login extends Component {
   }
 
   resetInputs = () => {
-    this.setState({
-      username: '',
-      password: '',
-      email: '',
-      first_name: '',
-      last_name: '',
-      showSignup: false,
-      errors: []
+    this.setState(st => {
+        return {
+          username: '',
+          password: '',
+          email: '',
+          first_name: '',
+          last_name: '',
+          showSignup: st.showSignup,
+          errors: []
+        }
     })
   }
 
@@ -112,9 +115,6 @@ class Login extends Component {
   * to toggle the login and sign up forms 
   */
   render() {
-    console.log('errors', this.state.errors)
-    console.log('props errors', this.props)
-
     if (this.props.currentUser) return <Redirect to='/' />
     return (
       <div className="Login mt-5">
