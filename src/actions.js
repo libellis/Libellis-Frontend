@@ -1,5 +1,6 @@
 import {
   SET_USER,
+  SET_LOGIN_ERROR,
   REMOVE_USER,
   LOAD_SURVEYS,
   LOAD_USER_HISTORY,
@@ -24,16 +25,24 @@ export function register(regData) {
       let token = r.data.token;
       localStorage.setItem('token', token);
       return dispatch(setCurrentUser(r.data.token));
+    }).catch(err => {
+      console.log('Register error', err.response.data);
+      return dispatch(setLoginErrors(err.response.data.error));
     });
   };
 }
 
 export function login(regData) {
   return function(dispatch) {
-    axios.post(`${BASE_URL}/login`, regData).then(r => {
+    axios.post(`${BASE_URL}/login`, regData)
+    .then(r => {
       let token = r.data.token;
       localStorage.setItem('token', token);
       return dispatch(setCurrentUser(r.data.token));
+    })
+    .catch(err => {
+      console.log('login error', JSON.stringify(err.response.data));
+      return dispatch(setLoginErrors(err.response.data.error));
     });
   };
 }
@@ -45,6 +54,11 @@ export function getUserFromToken() {
       return dispatch(setCurrentUser(token));
     }
   };
+}
+
+function setLoginErrors(err) {
+  console.log('set login errors', err);
+  return {type: SET_LOGIN_ERROR, errors: [err]};
 }
 
 // issues action that adds user to state

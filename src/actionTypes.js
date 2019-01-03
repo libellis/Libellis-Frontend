@@ -1,4 +1,5 @@
 export const SET_USER = 'SET_USER';
+export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const REMOVE_USER = 'REMOVE_USER';
 export const LOAD_SURVEYS = 'LOAD_SURVEYS';
 export const ADD_SURVEY = 'ADD_SURVEY';

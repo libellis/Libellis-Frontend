@@ -21,6 +21,14 @@ class Login extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.errors !== this.props.errors) {
+      this.setState({
+        errors: this.props.errors,
+      })
+    }
+  }
+
   // Handles login and signup button and flips state
   // Also removes all errors
   handleClick = (show) => {
@@ -45,6 +53,7 @@ class Login extends Component {
     }
 
     //put some thunks here
+    console.log('Registering user', username)
     if (this.state.showSignup) {
       this.props.register({ username, password, first_name, last_name, email });
     } else {
@@ -52,7 +61,7 @@ class Login extends Component {
     }
 
     //reset input fields
-    this.resetInputs();
+    // this.resetInputs();
   }
 
   /** Control input fields */
@@ -61,14 +70,16 @@ class Login extends Component {
   }
 
   resetInputs = () => {
-    this.setState({
-      username: '',
-      password: '',
-      email: '',
-      first_name: '',
-      last_name: '',
-      showSignup: false,
-      errors: []
+    this.setState(st => {
+        return {
+          username: '',
+          password: '',
+          email: '',
+          first_name: '',
+          last_name: '',
+          showSignup: st.showSignup,
+          errors: []
+        }
     })
   }
 
@@ -142,8 +153,10 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('mapstatetoprops', state)
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    errors: state.errors,
   }
 }
 
