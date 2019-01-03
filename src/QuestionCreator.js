@@ -14,7 +14,7 @@ class QuestionCreator extends Component {
       loading: true,
       error: false,
       title: '',
-      type: '',
+      type: 'multiple',
     };
   }
 
@@ -71,7 +71,6 @@ class QuestionCreator extends Component {
             onChange={this.handleChange}
             type="text"
           />
-
           <label className="mt-2" htmlFor="type">
             Type
           </label>
