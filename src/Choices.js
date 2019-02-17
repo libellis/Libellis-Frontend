@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Input, Button, ButtonGroup, Alert} from 'reactstrap';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Input, Button, ButtonGroup, Alert } from 'reactstrap';
 import './SurveyDetails.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ChoiceCreator extends Component {
   constructor(props) {
@@ -11,13 +11,13 @@ class ChoiceCreator extends Component {
       choices: [
         {
           title: '',
-          type: 'text',
+          content_type: 'text'
         },
         {
           title: '',
-          type: 'text',
-        },
-      ],
+          content_type: 'text'
+        }
+      ]
     };
   }
 
@@ -32,13 +32,13 @@ class ChoiceCreator extends Component {
       choices: [
         {
           title: '',
-          type: 'text',
+          content_type: 'text'
         },
         {
           title: '',
-          type: 'text',
-        },
-      ],
+          content_type: 'text'
+        }
+      ]
     });
   };
 
@@ -47,13 +47,13 @@ class ChoiceCreator extends Component {
     // Make a copy of the choices array
     const updatedChoices = [...this.state.choices];
     // Make a copy of the choice object for the choice we are updating
-    const updatedChoice = {...this.state.choices[evt.target.dataset.id]};
+    const updatedChoice = { ...this.state.choices[evt.target.dataset.id] };
     // Update it's choice field with the radio button just selected
     updatedChoice.title = evt.target.value;
     // reassign at our copy of choices from state
     updatedChoices[evt.target.dataset.id] = updatedChoice;
     this.setState({
-      choices: updatedChoices,
+      choices: updatedChoices
     });
   };
 
@@ -70,14 +70,14 @@ class ChoiceCreator extends Component {
   addChoice = evt => {
     evt.preventDefault();
     const choices = [...this.state.choices];
-    choices.push({title: '', type: 'text'});
-    this.setState({choices});
+    choices.push({ title: '', content_type: 'text' });
+    this.setState({ choices });
   };
 
   removeChoice = evt => {
     evt.preventDefault();
     const choices = this.state.choices.slice(0, -1);
-    this.setState({choices});
+    this.setState({ choices });
   };
 
   render() {
