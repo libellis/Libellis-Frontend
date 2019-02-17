@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Form, Input, Button, ButtonGroup, Alert} from 'reactstrap';
-import {Jumbotron} from 'reactstrap';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Form, Input, Button, ButtonGroup, Alert } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
 import SurveyCard from './SurveyCard';
 import Choices from './Choices';
 import TakeSurveyForm from './TakeSurveyForm';
@@ -14,7 +14,7 @@ class QuestionCreator extends Component {
       loading: true,
       error: false,
       title: '',
-      type: 'multiple',
+      question_type: 'multiple'
     };
   }
 
@@ -24,19 +24,19 @@ class QuestionCreator extends Component {
 
   /** Control input fields */
   handleChange = evt => {
-    this.setState({[evt.target.name]: evt.target.value});
+    this.setState({ [evt.target.name]: evt.target.value });
   };
 
   resetForm = () => {
     this.setState({
       title: '',
       type: ''
-    })
-  }
+    });
+  };
 
   attachChoices = choices => {
-    const {title, type} = this.state;
-    return {title, type, choices};
+    const { title, type } = this.state;
+    return { title, type, choices };
   };
 
   handleChoices = choices => {
@@ -56,41 +56,43 @@ class QuestionCreator extends Component {
   };
 
   render() {
-      return (
-        <Form
-          className="QuestionCreator"
-          onSubmit={this.handleSubmit}
-          className="SurveyForm p-5 mt-5 rounded">
-          <label className="mt-2" htmlFor="title">
-            Question Title
-          </label>
-          <Input
-            id="title"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-            type="text"
-          />
-          <label className="mt-2" htmlFor="type">
-            Type
-          </label>
-          <Input
-            id="type"
-            name="type"
-            value={this.state.type}
-            type="select"
-            onChange={this.handleChange}>
-            <option value="multiple">Multiple Choice</option>
-            <option value="ranked">Ranked Poll</option>
-          </Input>
-          <br />
-          <label className="mt-2">Choices:</label>
-          <Choices
-            passUpChoices={this.handleChoices}
-            handleFinalize={this.handleFinalize}
-          />
-        </Form>
-      );
+    return (
+      <Form
+        className="QuestionCreator"
+        onSubmit={this.handleSubmit}
+        className="SurveyForm p-5 mt-5 rounded"
+      >
+        <label className="mt-2" htmlFor="title">
+          Question Title
+        </label>
+        <Input
+          id="title"
+          name="title"
+          value={this.state.title}
+          onChange={this.handleChange}
+          type="text"
+        />
+        <label className="mt-2" htmlFor="type">
+          Type
+        </label>
+        <Input
+          id="question_type"
+          name="question_type"
+          value={this.state.question_type}
+          type="select"
+          onChange={this.handleChange}
+        >
+          <option value="multiple">Multiple Choice</option>
+          <option value="ranked">Ranked Poll</option>
+        </Input>
+        <br />
+        <label className="mt-2">Choices:</label>
+        <Choices
+          passUpChoices={this.handleChoices}
+          handleFinalize={this.handleFinalize}
+        />
+      </Form>
+    );
   }
 }
 
