@@ -30,13 +30,13 @@ class QuestionCreator extends Component {
   resetForm = () => {
     this.setState({
       title: '',
-      type: ''
+      question_type: ''
     });
   };
 
   attachChoices = choices => {
-    const { title, type } = this.state;
-    return { title, type, choices };
+    const { title, question_type } = this.state;
+    return { title, question_type, choices };
   };
 
   handleChoices = choices => {
@@ -72,7 +72,7 @@ class QuestionCreator extends Component {
           onChange={this.handleChange}
           type="text"
         />
-        <label className="mt-2" htmlFor="type">
+        <label className="mt-2" htmlFor="question_type">
           Type
         </label>
         <Input
