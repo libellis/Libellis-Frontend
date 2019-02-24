@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import './SurveyCard.css';
 import {Alert, Button, Card, CardTitle, CardBody} from 'reactstrap';
 
@@ -35,11 +36,17 @@ class SurveyCard extends Component {
               Edit Survey
             </Link>
           )}
-          <Button onClick={this.handleDelete}>Delete Survey</Button>
+          { author === this.props.username ? <Button onClick={this.handleDelete}>Delete Survey</Button>: ''}
         </CardBody>
       </Card>
     );
   }
 }
 
-export default SurveyCard;
+function mapStateToProps(state) {
+      return {
+        username: state.currentUser
+      }
+}
+
+export default connect(mapStateToProps)(SurveyCard);
