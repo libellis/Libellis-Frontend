@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './SurveyCard.css';
+import SurveyResults from './SurveyResults';
 import {Alert, Button, Card, CardTitle, CardBody} from 'reactstrap';
 
 class SurveyCard extends Component {
@@ -21,31 +22,33 @@ class SurveyCard extends Component {
   render() {
     let {title, description, author} = this.props.survey;
     return (
-      <Card className="SurveyCard text-center">
-        <CardTitle>{title}</CardTitle>
-        <CardBody>
-          <p>Description: {description}</p>
-          <p>Author: {author}</p>
-          {this.state.error ? <Alert>{this.state.error}</Alert> : ''}
-          {this.props.survey.published ? (
-            <Link className="btn btn-primary" to={this.props.editLink}>
-              Take Survey
-            </Link>
-          ) : (
-            <Link className="btn btn-primary" to={this.props.editLink}>
-              Edit Survey
-            </Link>
-          )}
-          { author === this.props.username ? <Button onClick={this.handleDelete}>Delete Survey</Button>: ''}
-        </CardBody>
-      </Card>
+      <Link to={SurveyResults} >
+        <Card className="SurveyCard text-center">
+          <CardTitle>{title}</CardTitle>
+          <CardBody>
+            <p>Description: {description}</p>
+            <p>Author: {author}</p>
+            {this.state.error ? <Alert>{this.state.error}</Alert> : ''}
+            {this.props.survey.published ? (
+              <Link className="btn btn-primary" to={this.props.editLink}>
+                Take Survey
+              </Link>
+            ) : (
+              <Link className="btn btn-primary" to={SurveyResults}>
+                Survey Results
+              </Link>
+            )}
+            { author === this.props.currentUser ? <Button onClick={this.handleDelete}>Delete Survey</Button>: ''}
+          </CardBody>
+        </Card>
+      </Link>
     );
   }
 }
 
 function mapStateToProps(state) {
       return {
-        username: state.currentUser
+        currentUser: state.currentUser
       }
 }
 
